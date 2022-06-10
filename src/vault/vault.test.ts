@@ -58,4 +58,20 @@ describe("Vault test", () => {
       body: '{"id":"cd374ee55889ecf95c932724fb945fa1326245bd200aadd956ca4febd3c4b5f7","ciphertext":"04503405304958 this is an encrypted text"}',
     });
   });
+
+  test("Should test an other id and return a 404", async () => {
+    const apiInput: getParams = {
+      id: id + 1,
+    };
+
+    const result = await get(
+      { queryStringParameters: apiInput },
+      mockContext(),
+      () => {}
+    );
+    expect(result).toEqual({
+      statusCode: 404,
+      body: "not found",
+    });
+  });
 });

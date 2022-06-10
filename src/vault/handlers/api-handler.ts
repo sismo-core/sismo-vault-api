@@ -30,7 +30,12 @@ export const get: Handler = async (
       body: JSON.stringify(vault),
     };
   } catch (e: any) {
-    console.log(e.message);
+    if ((e.message as string).includes("No item with the key")) {
+      return {
+        statusCode: 404,
+        body: "not found",
+      };
+    }
     return {
       statusCode: 500,
       body: "",
@@ -61,7 +66,6 @@ export const post: Handler = async (
       body: JSON.stringify(vault),
     };
   } catch (e: any) {
-    console.log(e.message);
     return {
       statusCode: 500,
       body: "",
