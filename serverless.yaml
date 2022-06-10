@@ -1,0 +1,97 @@
+service: sismo-vault
+frameworkVersion: "3"
+useDotenv: true
+
+package:
+  individually: true
+
+custom:
+  profiles:
+    dev: local
+    staging: staging-common
+    prod: prod-common
+  DB:
+    dev:
+      tableNamePrefix: SismoVaultLocal
+      region: eu-west-1
+    staging:
+      tableNamePrefix: SismoVaultStaging
+      region: eu-west-1
+    prod:
+      tableNamePrefix: SismoVaultProd
+      region: eu-west-1
+
+  webpack:
+    packager: "yarn" # Packager that will be used to package your external modules
+    includeModules: true # enable auto-packing of external modules
+  serverless-offline:
+    httpPort: 4000
+
+  dynamodb:
+    # If you only want to use DynamoDB Local in some stages, declare them here
+    start:
+      docker: true
+      port: 8000
+      inMemory: true
+      migrate: true
+      convertEmptyValues: true
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  memorySize: 512 # optional, in MB, default is 1024
+  timeout: 29 # 29 seconds, default is 6
+  profile: ${self:custom.profiles.${sls:stage}}
+  region: eu-west-1
+  httpApi:
+    cors: true
+  environment:
+    TABLE_NAME_PREFIX: ${self:custom.DB.${sls:stage}.tableNamePrefix}
+    NODE_ENV: ${sls:stage}
+    LOG: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - "Fn::GetAtt": [vault, Arn]
+
+functions:
+  getApi:
+    handler: src/vault/handlers/api-handler.get
+    events:
+      - httpApi:
+          path: /retrieve
+          method: GET
+  postApi:
+    handler: src/vault/handlers/api-handler.post
+    events:
+      - httpApi:
+          path: /add
+          method: POST
+
+plugins:
+  - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-offline
+
+resources:
+  Resources:
+    vault:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.DB.${sls:stage}.tableNamePrefix}Vault
+        AttributeDefinitions: ${file(./src/vault/schema.db.json):AttributeDefinitions}
+        KeySchema: ${file(./src/vault/schema.db.json):KeySchema}
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

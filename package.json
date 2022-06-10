@@ -1,0 +1,63 @@
+{
+  "name": "sismo-attestations-data",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "npx jest --runInBand",
+    "serve:local": "npx sls offline",
+    "lint": "eslint src/**/*.ts --max-warnings=0",
+    "init-local-db": "NODE_ENV=local npx ts-node ./src/scripts/init-local-db.ts",
+    "pretest:int": "docker-compose up -d dynamodb-local"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.97",
+    "@types/jest": "^27.5.1",
+    "@types/node": "^17.0.38",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
+    "aws-lambda": "^1.0.7",
+    "eslint": "^8.12.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "husky": ">=6",
+    "jest": "^28.1.0",
+    "lint-staged": ">=10",
+    "prettier": "^2.6.2",
+    "serverless-offline": "^8.8.0",
+    "serverless-offline-sqs": "^6.0.0",
+    "serverless-webpack": "^5.7.1",
+    "ts-jest": "^28.0.2",
+    "ts-loader": "^9.3.0",
+    "ts-node": "^10.7.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.3",
+    "webpack": "^5.73.0"
+  },
+  "lint-staged": {
+    "src/**/*": "prettier --write src/**/*.ts",
+    "src/**/*.{ts,tsx,js,jsx}": [
+      "eslint src/**/*.ts --max-warnings=0"
+    ]
+  },
+  "engines": {
+    "npm": "NPM IS NOT USED - use yarn instead."
+  },
+  "dependencies": {
+    "@aws/dynamodb-data-mapper": "^0.7.3",
+    "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
+    "@aws/dynamodb-expressions": "^0.7.3",
+    "aws-sdk": "^2.1148.0",
+    "fast-glob": "^3.2.11",
+    "fork-ts-checker-webpack-plugin": "^7.2.11",
+    "fs": "^0.0.1-security",
+    "keccak256": "^1.0.6",
+    "mustache": "^4.2.0",
+    "readline": "^1.3.0",
+    "serverless": "^3.19.0",
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-plugin-include-dependencies": "^5.0.0",
+    "serverless-plugin-typescript": "^2.1.2",
+    "sha3": "^2.1.4",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
