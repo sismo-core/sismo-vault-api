@@ -76,10 +76,15 @@ sls deploy --stage staging
 
 Then deploy the CloudFront with terraform in the `./terraform` folder
 
+```bash
+terraform workspace select staging
+terraform apply
+```
+
 ## Deployed endpoints
 
-**prod**: vault-api.sismo.io
-**staging**: vault-api.zikies.io
+**prod**: `vault-api.sismo.io`  
+**staging**: `vault-api.zikies.io`
 
 # Developper
 
