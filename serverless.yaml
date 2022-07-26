@@ -20,6 +20,14 @@ custom:
     prod:
       tableNamePrefix: SismoVaultProd
       region: eu-west-1
+  cors:
+    dev:
+      - http://localhost:3000
+    staging:
+      - https://alpha.zikies.io
+    prod:
+      - https://alpha.sismo.io
+      - https://sandbox.sismo.io
 
   webpack:
     packager: "yarn" # Packager that will be used to package your external modules
@@ -44,7 +52,8 @@ provider:
   profile: ${self:custom.profiles.${sls:stage}}
   region: eu-west-1
   httpApi:
-    cors: true
+    cors:
+      allowedOrigins: ${self:custom.cors.${sls:stage}}
   environment:
     TABLE_NAME_PREFIX: ${self:custom.DB.${sls:stage}.tableNamePrefix}
     NODE_ENV: ${sls:stage}
