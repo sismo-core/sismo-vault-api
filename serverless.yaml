@@ -24,7 +24,7 @@ custom:
     dev:
       - http://localhost:3000
     staging:
-      - https://alpha.zikies.io
+      - "*"
     prod:
       - https://alpha.sismo.io
       - https://sandbox.sismo.io
