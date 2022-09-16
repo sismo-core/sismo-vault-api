@@ -27,7 +27,7 @@ custom:
       - "*"
     prod:
       - https://alpha.sismo.io
-      - https://sandbox.sismo.io
+      - https://playground.sismo.io
 
   webpack:
     packager: "yarn" # Packager that will be used to package your external modules
