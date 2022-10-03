@@ -27,6 +27,7 @@ custom:
       - "*"
     prod:
       - https://alpha.sismo.io
+      - https://app.sismo.io
       - https://playground.sismo.io
 
   webpack:
