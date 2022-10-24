@@ -12,4 +12,7 @@ export class VaultDocument {
 
   @attribute()
   ciphertext: string;
+
+  @attribute()
+  version: string;
 }

@@ -46,6 +46,18 @@ export const get: Handler = async (
 export type postParams = {
   token: string;
   ciphertext: string;
+  version?: string;
+};
+
+export const getVault = async (id: string) => {
+  try {
+    const vaultToRetrieve: VaultDocument = new VaultDocument();
+    vaultToRetrieve.id = id;
+    vaultToRetrieve.version = (await mapper.get(vaultToRetrieve)).version;
+    return vaultToRetrieve;
+  } catch {
+    return null;
+  }
 };
 
 export const post: Handler = async (
@@ -54,12 +66,36 @@ export const post: Handler = async (
 ): Promise<APIGatewayProxyResult> => {
   const requestData: postParams = JSON.parse(event?.body!);
   const hash = new SHA3(256);
+  const vaultId = hash.update(requestData.token).digest("hex");
+  const updateVaultVersion = parseInt(requestData.version ?? "1");
+  if (isNaN(updateVaultVersion)) {
+    throw new Error("Version should be a number");
+  }
 
   try {
+    const vaultToRetrieve = await getVault(vaultId);
+    if (vaultToRetrieve !== null) {
+      const currentVaultVersion = parseInt(vaultToRetrieve.version ?? "1");
+      if (currentVaultVersion > updateVaultVersion) {
+        throw new Error(
+          `You can't update a vault with an older version ${currentVaultVersion} > ${updateVaultVersion}`
+        );
+      }
+    }
+
+    // latest vault
     const vault: VaultDocument = new VaultDocument();
-    vault.id = hash.update(requestData.token).digest("hex");
+    vault.id = vaultId;
     vault.ciphertext = requestData.ciphertext;
+    vault.version = updateVaultVersion.toString();
     await mapper.put(vault);
+
+    // save also historical versioned content
+    const vaultHistorical: VaultDocument = new VaultDocument();
+    vaultHistorical.id = `${vault.id}_v${updateVaultVersion}`;
+    vaultHistorical.ciphertext = vault.ciphertext;
+    vaultHistorical.version = vault.version;
+    await mapper.put(vaultHistorical);
 
     return {
       statusCode: 200,
@@ -68,7 +104,7 @@ export const post: Handler = async (
   } catch (e: any) {
     return {
       statusCode: 500,
-      body: "",
+      body: e.message,
     };
   }
 };

@@ -26,13 +26,15 @@ Example:
 $ curl -X POST -H 'content-type: application/json' https://vault-api.sismo.io/add -d @- <<EOF
 {
   "token": "pookie",
-  "ciphertext": "0x123...example of encrypted text"
+  "ciphertext": "0x123...example of encrypted text",
+  "version": "1",
 }
 EOF
 
 {
   "id": "2586915241cb56033a4eabb0fec9664775e2ab26866fa9109732556ccf440b0a",
-  "ciphertext": "0x123...example of encrypted text"
+  "ciphertext": "0x123...example of encrypted text",
+  "version": "1",
 }
 ```
 
@@ -58,7 +60,8 @@ $ curl https://vault-api.sismo.io/retrieve?id=2586915241cb56033a4eabb0fec9664775
 
 {
   "id": "2586915241cb56033a4eabb0fec9664775e2ab26866fa9109732556ccf440b0a",
-  "ciphertext": "0x123...example of encrypted text"
+  "ciphertext": "0x123...example of encrypted text",
+  "version": "1",
 }
 ```
 
