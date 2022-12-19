@@ -29,6 +29,8 @@ custom:
       - https://alpha.sismo.io
       - https://app.sismo.io
       - https://playground.sismo.io
+      - https://testnets.sismo.io
+      - https://staging.sismo.io
 
   webpack:
     packager: "yarn" # Packager that will be used to package your external modules
