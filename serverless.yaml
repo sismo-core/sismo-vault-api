@@ -14,12 +14,18 @@ custom:
     dev:
       tableNamePrefix: SismoVaultLocal
       region: eu-west-1
+      readCapacity: 3
+      writeCapacity: 3
     staging:
       tableNamePrefix: SismoVaultStaging
       region: eu-west-1
+      readCapacity: 3
+      writeCapacity: 3
     prod:
       tableNamePrefix: SismoVaultProd
       region: eu-west-1
+      readCapacity: 10
+      writeCapacity: 40
   cors:
     dev:
       - http://localhost:3000
@@ -105,5 +111,5 @@ resources:
         AttributeDefinitions: ${file(./src/vault/schema.db.json):AttributeDefinitions}
         KeySchema: ${file(./src/vault/schema.db.json):KeySchema}
         ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+          ReadCapacityUnits: ${self:custom.DB.${sls:stage}.readCapacity}
+          WriteCapacityUnits: ${self:custom.DB.${sls:stage}.writeCapacity}
