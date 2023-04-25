@@ -15,6 +15,11 @@ locals {
       dns_zone   = "sismo.io"
       domain     = "vault-beta-api.sismo.io"
     }
+    staging-beta = {
+      account_id = "934818791296" # staging-common
+      dns_zone   = "zikies.io"
+      domain     = "vault-beta-api.zikies.io"
+    }
     dev-beta = {
       account_id = "214635901820" # prod-common
       dns_zone   = "sismo.io"

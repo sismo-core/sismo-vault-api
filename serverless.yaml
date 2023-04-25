@@ -11,6 +11,7 @@ custom:
     staging: staging-common
     prod: prod-common
     prod-beta: prod-common
+    staging-beta: staging-common
     dev-beta: prod-common
   DB:
     dev:
@@ -38,6 +39,11 @@ custom:
       region: eu-west-1
       readCapacity: 3
       writeCapacity: 3
+    staging-beta: 
+      tableNamePrefix: SismoVaultStagingBeta
+      region: eu-west-1
+      readCapacity: 3
+      writeCapacity: 3 
   cors:
     dev:
       - http://localhost:3000
@@ -50,6 +56,8 @@ custom:
       - https://testnets.sismo.io
       - https://staging.sismo.io
     prod-beta:
+      - "*"
+    staging-beta:
       - "*"
     dev-beta:
       - "*"
