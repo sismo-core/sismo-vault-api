@@ -32,8 +32,8 @@ custom:
     prod-beta:
       tableNamePrefix: SismoVaultProdBeta
       region: eu-west-1
-      readCapacity: 3
-      writeCapacity: 3
+      readCapacity: 10
+      writeCapacity: 40
     dev-beta:
       tableNamePrefix: SismoVaultDevBeta
       region: eu-west-1
