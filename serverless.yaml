@@ -55,6 +55,8 @@ custom:
       - https://playground.sismo.io
       - https://testnets.sismo.io
       - https://staging.sismo.io
+      - https://staging.vault-beta.sismo.io
+      - https://vault-beta.sismo.io
     prod-beta:
       - "*"
     staging-beta:
