@@ -13,6 +13,13 @@ custom:
     prod-beta: prod-common
     staging-beta: staging-common
     dev-beta: prod-common
+  provisionedConcurrency:
+    dev: 0
+    staging: 0
+    prod: 3
+    prod-beta: 3
+    dev-beta: 3
+    staging-beta: 3
   DB:
     dev:
       tableNamePrefix: SismoVaultLocal
@@ -115,6 +122,7 @@ functions:
       - httpApi:
           path: /retrieve
           method: GET
+    provisionedConcurrency: ${self:custom.provisionedConcurrency.${sls:stage}}
   postApi:
     handler: src/vault/handlers/api-handler.post
     events:
