@@ -16,41 +16,41 @@ custom:
   provisionedConcurrency:
     dev: 0
     staging: 0
-    prod: 3
-    prod-beta: 3
-    dev-beta: 3
-    staging-beta: 3
+    prod: 1
+    prod-beta: 1
+    dev-beta: 0
+    staging-beta: 0
   DB:
     dev:
       tableNamePrefix: SismoVaultLocal
       region: eu-west-1
-      readCapacity: 3
-      writeCapacity: 3
+      readCapacity: 1
+      writeCapacity: 1
     staging:
       tableNamePrefix: SismoVaultStaging
       region: eu-west-1
-      readCapacity: 3
-      writeCapacity: 3
+      readCapacity: 1
+      writeCapacity: 1
     prod:
       tableNamePrefix: SismoVaultProd
       region: eu-west-1
-      readCapacity: 10
-      writeCapacity: 40
+      readCapacity: 3
+      writeCapacity: 3
     prod-beta:
       tableNamePrefix: SismoVaultProdBeta
       region: eu-west-1
-      readCapacity: 10
-      writeCapacity: 40
+      readCapacity: 3
+      writeCapacity: 3
     dev-beta:
       tableNamePrefix: SismoVaultDevBeta
       region: eu-west-1
-      readCapacity: 3
-      writeCapacity: 3
+      readCapacity: 1
+      writeCapacity: 1
     staging-beta: 
       tableNamePrefix: SismoVaultStagingBeta
       region: eu-west-1
-      readCapacity: 3
-      writeCapacity: 3 
+      readCapacity: 1
+      writeCapacity: 1 
   cors:
     dev:
       - http://localhost:3000
